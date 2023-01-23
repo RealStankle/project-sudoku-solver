@@ -69,9 +69,9 @@ class SudokuSolver {
 
     const regionArray = [];
 
-    // get one row of the region on each iteration
+    // it takes one row of the region on each iteration
     for (let i = 0; i < 3; i++) {
-      // get one element of the row at each iteration
+      // it takes one element of the row at each iteration
       for (let j = 0; j < 3; j++) {
         regionArray.push(puzzleString[IndexOfFirstElement + j + 9 * i]);
       }
