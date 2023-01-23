@@ -41,10 +41,10 @@ class SudokuSolver {
     const rowString = puzzleString.slice(startIndex, endIndex);
 
     if (rowString.includes(value.toString())) {
-      return false;
+      return { result: false, conflict: 'row' };
     }
 
-    return true;
+    return { result: true };
   }
 
   checkColPlacement(puzzleString, column, value) {
@@ -55,10 +55,10 @@ class SudokuSolver {
     }
 
     if (columnArray.includes(value.toString())) {
-      return false;
+      return { result: false, conflict: 'column' };
     }
 
-    return true;
+    return { result: true };
   }
 
   checkRegionPlacement(puzzleString, row, column, value) {
@@ -78,10 +78,10 @@ class SudokuSolver {
     }
 
     if (regionArray.includes(value.toString())) {
-      return false;
+      return { result: false, conflict: 'region' };
     }
 
-    return true;
+    return { result: true };
   }
 
   solve(puzzleString) {}
