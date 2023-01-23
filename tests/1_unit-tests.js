@@ -42,64 +42,67 @@ suite('Unit Tests', () => {
   });
 
   test('checkRowPlacement function should return true for a valid row placement', () => {
-    const validationResult = solver.checkRowPlacement(
+    const checkRowPlacementResult = solver.checkRowPlacement(
       puzzleStrings[0][0],
       'D',
       7
     );
 
-    assert.isTrue(validationResult);
+    assert.isTrue(checkRowPlacementResult.result);
   });
 
   test('checkRowPlacement function should return false for an invalid row placement', () => {
-    const validationResult = solver.checkRowPlacement(
+    const checkRowPlacementResult = solver.checkRowPlacement(
       puzzleStrings[0][0],
       'H',
       3
     );
 
-    assert.isFalse(validationResult);
+    assert.isFalse(checkRowPlacementResult.result);
+    assert.strictEqual(checkRowPlacementResult.conflict, 'row');
   });
 
   test('checkColPlacement function should return true for a valid col placement', () => {
-    const validationResult = solver.checkColPlacement(
+    const checkColPlacementResult = solver.checkColPlacement(
       puzzleStrings[0][0],
       5,
       3
     );
 
-    assert.isTrue(validationResult);
+    assert.isTrue(checkColPlacementResult.result);
   });
 
   test('checkColPlacement function should return false for an invalid col placement', () => {
-    const validationResult = solver.checkColPlacement(
+    const checkColPlacementResult = solver.checkColPlacement(
       puzzleStrings[0][0],
       6,
       9
     );
 
-    assert.isFalse(validationResult);
+    assert.isFalse(checkColPlacementResult.result);
+    assert.strictEqual(checkColPlacementResult.conflict, 'column');
   });
 
   test('checkRegionPlacement function should return true for a valid region placement', () => {
-    const validationResult = solver.checkRegionPlacement(
+    const checkRegionPlacementResult = solver.checkRegionPlacement(
       puzzleStrings[0][0],
       'I',
       8,
       2
     );
 
-    assert.isTrue(validationResult);
+    assert.isTrue(checkRegionPlacementResult.result);
   });
 
   test('checkRegionPlacement function should return false for an invalid region placement', () => {
-    const validationResult = solver.checkRegionPlacement(
+    const checkRegionPlacementResult = solver.checkRegionPlacement(
       puzzleStrings[0][0],
       'E',
       3,
       1
     );
 
-    assert.isFalse(validationResult);
+    assert.isFalse(checkRegionPlacementResult.result);
+    assert.strictEqual(checkRegionPlacementResult.conflict, 'region');
   });
 });
