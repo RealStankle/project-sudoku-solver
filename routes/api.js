@@ -65,5 +65,21 @@ module.exports = function (app) {
     res.json({ valid: true });
   });
 
-  app.route('/api/solve').post((req, res) => {});
+  app.route('/api/solve').post((req, res) => {
+    const { puzzle } = req.body;
+
+    const validation = solver.validate(puzzle);
+
+    if (!validation.result) {
+      return res.json({ error: validation.message });
+    }
+
+    const solvedPuzzle = solver.solve(puzzle);
+
+    if (solvedPuzzle === null) {
+      return res.json({ error: 'Puzzle cannot be solved' });
+    }
+
+    res.json({ solution: solvedPuzzle });
+  });
 };
