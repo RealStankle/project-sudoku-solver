@@ -29,11 +29,13 @@ module.exports = function (app) {
     const rowValidation = solver.checkRowPlacement(
       puzzle,
       coordinate[0],
+      coordinate[1],
       value
     );
 
     const colValidation = solver.checkColPlacement(
       puzzle,
+      coordinate[0],
       coordinate[1],
       value
     );

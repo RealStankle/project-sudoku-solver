@@ -34,7 +34,21 @@ class SudokuSolver {
     return { result: true };
   }
 
-  checkRowPlacement(puzzleString, row, value) {
+  checkExistance(puzzleString, row, column) {
+    const cellIndex = this.rowsMap[row] * 9 + (column - 1);
+
+    if (puzzleString[cellIndex] !== '.') {
+      return `${puzzleString.slice(0, cellIndex)}.${puzzleString.slice(
+        cellIndex + 1
+      )}`;
+    }
+
+    return puzzleString;
+  }
+
+  checkRowPlacement(puzzleString, row, column, value) {
+    puzzleString = this.checkExistance(puzzleString, row, column);
+
     const startIndex = this.rowsMap[row] * 9;
     const endIndex = startIndex + 9;
 
@@ -47,7 +61,9 @@ class SudokuSolver {
     return { result: true };
   }
 
-  checkColPlacement(puzzleString, column, value) {
+  checkColPlacement(puzzleString, row, column, value) {
+    puzzleString = this.checkExistance(puzzleString, row, column);
+
     const columnArray = [];
 
     for (let i = 0; i < 9; i++) {
@@ -62,6 +78,8 @@ class SudokuSolver {
   }
 
   checkRegionPlacement(puzzleString, row, column, value) {
+    puzzleString = this.checkExistance(puzzleString, row, column);
+
     const rowIndexOfRegion = Math.floor(this.rowsMap[row] / 3);
     const columnIndexOfRegion = Math.floor((column - 1) / 3);
 
@@ -105,10 +123,12 @@ class SudokuSolver {
           const rowValidation = this.checkRowPlacement(
             puzzleString,
             rowString,
+            colNumber,
             guess
           );
           const colValidation = this.checkColPlacement(
             puzzleString,
+            rowString,
             colNumber,
             guess
           );

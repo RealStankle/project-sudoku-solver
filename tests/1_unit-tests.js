@@ -45,6 +45,7 @@ suite('Unit Tests', () => {
     const checkRowPlacementResult = solver.checkRowPlacement(
       puzzleStrings[0][0],
       'D',
+      3,
       7
     );
 
@@ -55,6 +56,7 @@ suite('Unit Tests', () => {
     const checkRowPlacementResult = solver.checkRowPlacement(
       puzzleStrings[0][0],
       'H',
+      2,
       3
     );
 
@@ -65,6 +67,7 @@ suite('Unit Tests', () => {
   test('checkColPlacement function should return true for a valid col placement', () => {
     const checkColPlacementResult = solver.checkColPlacement(
       puzzleStrings[0][0],
+      'A',
       5,
       3
     );
@@ -75,6 +78,7 @@ suite('Unit Tests', () => {
   test('checkColPlacement function should return false for an invalid col placement', () => {
     const checkColPlacementResult = solver.checkColPlacement(
       puzzleStrings[0][0],
+      'I',
       6,
       9
     );
