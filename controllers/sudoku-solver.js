@@ -84,7 +84,62 @@ class SudokuSolver {
     return { result: true };
   }
 
-  solve(puzzleString) {}
+  solve(puzzleString) {
+    const hasEmptyCells = /\./.test(puzzleString);
+
+    if (!hasEmptyCells) {
+      return puzzleString;
+    }
+
+    for (let row = 0; row < 9; row++) {
+      const rowString = String.fromCharCode(65 + row);
+      for (let col = 0; col < 9; col++) {
+        const colNumber = col + 1;
+        const cellIndex = 9 * row + col;
+
+        if (puzzleString[cellIndex] !== '.') {
+          continue;
+        }
+
+        for (let guess = 1; guess < 10; guess++) {
+          const rowValidation = this.checkRowPlacement(
+            puzzleString,
+            rowString,
+            guess
+          );
+          const colValidation = this.checkColPlacement(
+            puzzleString,
+            colNumber,
+            guess
+          );
+          const regionValidation = this.checkRegionPlacement(
+            puzzleString,
+            rowString,
+            colNumber,
+            guess
+          );
+
+          if (
+            !rowValidation.result ||
+            !colValidation.result ||
+            !regionValidation.result
+          ) {
+            continue;
+          }
+
+          const solvedPuzzleString = this.solve(
+            puzzleString.replace(/\./, guess.toString())
+          );
+
+          if (solvedPuzzleString) {
+            return solvedPuzzleString;
+          }
+        }
+
+        return null;
+      }
+    }
+  }
 }
 
 module.exports = SudokuSolver;
