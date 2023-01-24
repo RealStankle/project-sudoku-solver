@@ -105,4 +105,22 @@ suite('Unit Tests', () => {
     assert.isFalse(checkRegionPlacementResult.result);
     assert.strictEqual(checkRegionPlacementResult.conflict, 'region');
   });
+
+  test('solve function should pass for valid puzzle string', () => {
+    const solveResult = solver.solve(puzzleStrings[0][0]);
+
+    assert.isNotNull(solveResult);
+  });
+
+  test('solve function should fail for invalid puzzle string', () => {
+    const solveResult = solver.solve(`${puzzleStrings[0][0].slice(0, 78)}123`);
+
+    assert.isNull(solveResult);
+  });
+
+  test('solve function should return solved puzzle string for valid puzzle string', () => {
+    const solvedPuzzleString = solver.solve(puzzleStrings[1][0]);
+
+    assert.strictEqual(solvedPuzzleString, puzzleStrings[1][1]);
+  });
 });
