@@ -119,4 +119,57 @@ suite('Functional Tests', () => {
       assert.deepEqual(response.body, { error: 'Invalid value' });
     });
   });
+
+  suite('POST /api/solve', () => {
+    test('it correctly handles the request with a valid puzzle string', async () => {
+      const response = await chai
+        .request(server)
+        .post('/api/solve')
+        .send({ puzzle: puzzleStrings[2][0] });
+
+      assert.strictEqual(response.status, 200);
+      assert.strictEqual(response.body.solution, puzzleStrings[2][1]);
+    });
+
+    test('it correctly handles the request with the missing puzzle string', async () => {
+      const response = await chai.request(server).post('/api/solve');
+
+      assert.strictEqual(response.status, 200);
+      assert.deepEqual(response.body, { error: 'Required field missing' });
+    });
+
+    test('it correctly handles the request with the puzzle containing invalid characters', async () => {
+      const response = await chai
+        .request(server)
+        .post('/api/solve')
+        .send({ puzzle: `${puzzleStrings[2][0].slice(0, 70)}abcde123456` });
+
+      assert.strictEqual(response.status, 200);
+      assert.deepEqual(response.body, {
+        error: 'Invalid characters in puzzle',
+      });
+    });
+
+    test('it correctly handles the request with the incorrect length puzzle', async () => {
+      const response = await chai
+        .request(server)
+        .post('/api/solve')
+        .send({ puzzle: `${puzzleStrings[2][0].slice(0, 60)}` });
+
+      assert.strictEqual(response.status, 200);
+      assert.deepEqual(response.body, {
+        error: 'Expected puzzle to be 81 characters long',
+      });
+    });
+
+    test('it correctly handles the request with the puzzle that cannot be solved', async () => {
+      const response = await chai
+        .request(server)
+        .post('/api/solve')
+        .send({ puzzle: `${puzzleStrings[2][0].slice(0, 75)}167843` });
+
+      assert.strictEqual(response.status, 200);
+      assert.deepEqual(response.body, { error: 'Puzzle cannot be solved' });
+    });
+  });
 });
